@@ -11,8 +11,11 @@ To install a package run one of the following commands in your default
 distribution:
 
 `sudo apt install wamerican` (102401 words)
+
 `sudo apt install wamerican-large` (167303 words)
+
 `sudo apt install wamerican-huge` (345470 words)
+
 `sudo apt install wamerican-insane` (654895 words)
 
 The biggest dictionary will be chosen automatically.
