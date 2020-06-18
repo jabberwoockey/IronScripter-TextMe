@@ -60,7 +60,7 @@ function Convert-NumberToWord {
         # in most Linux distros, but it's missing in WSL. It works for both,
         # Ubuntu 18.04 and Ubuntu 20.04 WSL. The dictionary file is just a plain
         # text file that consists of single words on each line, in my case 
-        # there's 102305 words there.
+        # there are 102305 words there.
         $TestFile = $(wsl test -e /usr/share/dict/words; echo $?)
         $ErrMessage = "It looks like a dictionary package is not installed in your WSL distribution.`n
 To instal run the following command in that distribution:`n
