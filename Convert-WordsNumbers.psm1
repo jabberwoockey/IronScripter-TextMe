@@ -60,15 +60,25 @@ function Convert-NumberToWord {
         # in most Linux distros, but it's missing in WSL. It works for both,
         # Ubuntu 18.04 and Ubuntu 20.04 WSL. The dictionary file is just a plain
         # text file that consists of single words on each line, in my case 
-        # there are 102305 words there.
+        # there are 102401 words there.
         $TestFile = $(wsl test -e /usr/share/dict/words; echo $?)
         $ErrMessage = "It looks like a dictionary package is not installed in your WSL distribution.`n
 To instal run the following command in that distribution:`n
 sudo apt install wamerican"
         if (-not $TestFile) {
             Write-Error -ErrorAction Stop -Message $ErrMessage
+        } elseif ($(wsl test -e /usr/share/dict/american-english-insane; echo $?)) {
+            $dict = $(wsl cat /usr/share/dict/american-english-insane)
+            Write-Verbose "Insane dictionary is in use"
+        } elseif ($(wsl test -e /usr/share/dict/american-english-huge; echo $?)) {
+            $dict = $(wsl cat /usr/share/dict/american-english-huge)
+            Write-Verbose "Huge dictionary is in use"
+        } elseif ($(wsl test -e /usr/share/dict/american-english-large; echo $?)) {
+            $dict = $(wsl cat /usr/share/dict/american-english-large)
+            Write-Verbose "Large dictionary is in use"
         } else {
             $dict = $(wsl cat /usr/share/dict/words)
+            Write-Verbose "Common dictionary is in use"
         }
     }
 
