@@ -85,6 +85,7 @@ sudo apt install wamerican"
     Process {
         # To iterate through a list of numbers, a foreach loop is used
         foreach ($SingleNumber in $Number) {
+            Write-Verbose "Start processing the number $SingleNumber"
             # Declaring initial variables, $pattern is our future regex pattern
             # to look through the beforementioned dictionary file, and $result
             # will be accumulating possible words for the number:
@@ -112,6 +113,7 @@ sudo apt install wamerican"
             foreach ($word in $dict) {
                 if ($word -match $pattern) {
                     $result += @(,$word)
+                    Write-Verbose "Match found: $($Matches.Values)"
                 }
             }
             # And one more time a new output object:
