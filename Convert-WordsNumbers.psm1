@@ -49,7 +49,8 @@ function Convert-NumberToWord {
         # Check a pattern for a number, it takes everything
         # except the number 1 and letters:
         [ValidatePattern("^[^1a-z]+$")]
-        [string[]]$Number
+        [string[]]$Number,
+        [string]$PathToDictionary = ""
     )
 
     Begin {
@@ -62,10 +63,22 @@ function Convert-NumberToWord {
         # text file that consists of single words on each line, in my case 
         # there are 102401 words there.
         $TestFile = $(wsl test -e /usr/share/dict/words; echo $?)
-        $ErrMessage = "It looks like a dictionary package is not installed in your WSL distribution.`n
-To instal run the following command in that distribution:`n
-sudo apt install wamerican"
-        if (-not $TestFile) {
+        $ErrMessage = @"
+It looks like a dictionary package is not installed in your WSL distribution.
+To instal run one of the following commands in that distribution or use your own dictionary:
+sudo apt install wamerican
+sudo apt install wamerican-large
+sudo apt install wamerican-huge
+sudo apt install wamerican-insane
+"@
+        if ($PathToDictionary -ne "") {
+            if (-not (Test-Path -Path $PathToDictionary)) {
+                Write-Error -ErrorAction Stop -Message "Wrong path to the dictionary file."
+            } else {
+                $dict = Get-Content -Path $PathToDictionary
+                Write-Verbose "User dictionary is in use"
+            }
+        } elseif (-not $TestFile) {
             Write-Error -ErrorAction Stop -Message $ErrMessage
         } elseif ($(wsl test -e /usr/share/dict/american-english-insane; echo $?)) {
             $dict = $(wsl cat /usr/share/dict/american-english-insane)
