@@ -65,12 +65,10 @@ function Convert-NumberToWord {
         $TestFile = $(wsl test -e /usr/share/dict/words; echo $?)
         $ErrMessage = @"
 It looks like a dictionary package is not installed in your WSL distribution.
-To instal run one of the following commands in that distribution or use your own dictionary:
+To instal run the following command in that distribution or use your own dictionary:
 sudo apt install wamerican
-sudo apt install wamerican-large
-sudo apt install wamerican-huge
-sudo apt install wamerican-insane
 "@
+        # Check the user dictionary:
         if ($PathToDictionary -ne "") {
             if (-not (Test-Path -Path $PathToDictionary)) {
                 Write-Error -ErrorAction Stop -Message "Wrong path to the dictionary file."
@@ -78,6 +76,7 @@ sudo apt install wamerican-insane
                 $dict = Get-Content -Path $PathToDictionary
                 Write-Verbose "User dictionary is in use"
             }
+        # Check WSL dictionaries:
         } elseif (-not $TestFile) {
             Write-Error -ErrorAction Stop -Message $ErrMessage
         } elseif ($(wsl test -e /usr/share/dict/american-english-insane; echo $?)) {

@@ -6,9 +6,10 @@ the ITU E 1.161 International Standard.
 
 To convert numbers to words you can use your own dictionary file (a plain text
 file with a single word on each line) or you can use WSL dictionaries.
-To use WSL dictionaries you need WSL to be installed on your system,
-also a package with dictionary words should be installed in your default WSL
-distribution.
+To use WSL dictionaries you need WSL
+[to be installed](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+on your system, also a package with dictionary words should be installed in
+your default WSL distribution.
 
 The dictionary package is missing in Ubuntu 18.04/20.04 WSL by default, so,
 to install the package run the following command in your default
